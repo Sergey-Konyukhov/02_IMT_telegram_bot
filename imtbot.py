@@ -13,7 +13,7 @@ def welcome_message(message):
     item1 = types.KeyboardButton("Новый расчёт")
     markup.add(item1)
 
-    bot.send_message(message.chat.id, "Добро пожаловать, {message.from_user.first_name}! Этот бот умеет рассчитывать Индекс массы тела (ИМТ).\nДля начала нажмите на кнопку: 'Новый расчёт'",
+    bot.send_message(message.chat.id, "Добро пожаловать!\nЭтот бот умеет рассчитывать Индекс массы тела (ИМТ).\nДля начала нажмите на кнопку: 'Новый расчёт'",
                      parse_mode='html', reply_markup=markup)
 
 @bot.message_handler(content_types=['text'])
@@ -28,8 +28,10 @@ def handle_text(message):
         elif chat_id in user_data and user_data[chat_id].get('step') == 'height':
             try:
                 height = float(message.text.replace(',', '.'))
+                if height >= 2.5:
+                    bot.send_message(chat_id, "Этот бот умеет расчитывать ИМТ только для человека. \nДля расчёта ИМТ жирафа воспользуйтесь другими программами.")
                 if height <= 0:
-                    raise ValueError("Height must be positive")
+                    raise ValueError("Рост должен быть больше 0 !")
                 user_data[chat_id]['height'] = height
                 user_data[chat_id]['step'] = 'weight'
                 bot.send_message(chat_id, "Во-вторых, укажите вес в килограммах.\nНапример: 70 или 85.5")
@@ -39,8 +41,10 @@ def handle_text(message):
         elif chat_id in user_data and user_data[chat_id].get('step') == 'weight':
             try:
                 weight = float(message.text.replace(',', '.'))
+                if weight >= 500:
+                    bot.send_message(chat_id, "Этот бот умеет расчитывать ИМТ только для человека. \nДля расчёта ИМТ слона воспользуйтесь другими программами.")
                 if weight <= 0:
-                    raise ValueError("Weight must be positive")
+                    raise ValueError("Вес должен быть больше 0 !")
                 user_data[chat_id]['weight'] = weight
 
                 # Расчет ИМТ
@@ -54,8 +58,14 @@ def handle_text(message):
                     category = "нормальный вес"
                 elif 25 <= bmi < 29.9:
                     category = "избыточный вес"
+                elif 30 <= bmi < 34.9:
+                    category = "I степень ожирения"
+                elif 35 <= bmi < 39.9:
+                    category = "II степень ожирения"
+                elif 40 <= bmi < 45.9:
+                    category = "III степень ожирения"
                 else:
-                    category = "ожирение"
+                    category = "IV степень ожирения"
 
                 bot.send_message(chat_id, f"Ваш ИМТ: {bmi:.2f}. Это {category}.")
 
