@@ -54,17 +54,17 @@ def handle_text(message):
                 # Категория ИМТ
                 if bmi < 16:
                     category = "значительный дефицит веса"
-                elif 16 <= bmi < 18.5:
+                elif 16 <= bmi < 18.499:
                     category = "дефицит массы тела"
-                elif 18.5 <= bmi < 24.9:
+                elif 18.5 <= bmi < 24.999:
                     category = "нормальный вес"
-                elif 25 <= bmi < 29.9:
+                elif 25 <= bmi < 29.999:
                     category = "избыточный вес"
-                elif 30 <= bmi < 34.9:
+                elif 30 <= bmi < 34.999:
                     category = "I степень ожирения"
-                elif 35 <= bmi < 39.9:
+                elif 35 <= bmi < 39.999:
                     category = "II степень ожирения"
-                elif 40 <= bmi < 45.9:
+                elif 40 <= bmi < 45.999:
                     category = "III степень ожирения"
                 else:
                     category = "IV степень ожирения"
