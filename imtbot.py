@@ -67,7 +67,9 @@ def handle_text(message):
                 else:
                     category = "IV степень ожирения"
 
-                bot.send_message(chat_id, f"Ваш ИМТ: {bmi:.2f}. Это {category}.")
+                bot.send_message(chat_id, f"ИМТ: {bmi:.2f}. Это {category}.")
+                sti = open('imt.webp', 'rb')
+                bot.send_sticker(message.chat.id, sti)
 
                 # Очистка данных пользователя
                 user_data.pop(chat_id, None)
