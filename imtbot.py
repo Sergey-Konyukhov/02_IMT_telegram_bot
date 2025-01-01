@@ -52,8 +52,10 @@ def handle_text(message):
                 bmi = weight / (height ** 2)
 
                 # Категория ИМТ
-                if bmi < 18.5:
-                    category = "недостаточный вес"
+                if bmi < 16:
+                    category = "значительный дефицит веса"
+                elif 16 <= bmi < 18.5:
+                    category = "дефицит массы тела"
                 elif 18.5 <= bmi < 24.9:
                     category = "нормальный вес"
                 elif 25 <= bmi < 29.9:
